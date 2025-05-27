@@ -1,0 +1,189 @@
+/* --- GOOGLE FONT & CSS VARIABLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #2c3e50; /* Deep professional blue */
+    --secondary-color: #3498db; /* Vibrant modern blue for accents */
+    --accent-color: #e74c3c; /* Strong accent for active states */
+    --bg-color: #ecf0f1; /* Light, clean gray for the background */
+    --text-light: #ffffff;
+    --text-dark: #34495e;
+    --hover-text-color: #2ecc71; /* A bright green for hover text */
+    --border-animation-color: #2ecc71; /* Color for the new border animation */
+}
+
+/* --- GENERAL STYLES & RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+}
+
+/* --- KEYFRAMES FOR ANIMATIONS --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseActiveButton {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow: 0 0 20px rgba(231, 76, 60, 0.7);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
+    }
+}
+
+
+/* --- NAVIGATION BAR --- */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+}
+
+.nav-links li a {
+    position: relative; /* Crucial for pseudo-elements used in animations */
+    overflow: hidden;   /* Keeps animations contained */
+    text-decoration: none;
+    color: var(--text-light);
+    background-color: var(--secondary-color);
+    padding: 0.8rem 1.6rem; /* Slightly increased padding */
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1; /* Ensure text is above pseudo-elements */
+}
+
+/* --- NAVIGATION ANIMATIONS --- */
+
+/* NEW: Expanding Border Effect using pseudo-elements */
+.nav-links li a::before,
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px; /* Thickness of the border lines */
+    background-color: var(--border-animation-color);
+    transition: width 0.3s ease-out;
+    z-index: -1; /* Place behind the text */
+}
+
+.nav-links li a::before { /* Top border */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-links li a::after { /* Bottom border */
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* NEW: Side border effects (can be added similarly if desired) */
+/* For simplicity, I'm focusing on top/bottom here */
+
+.nav-links li a:hover {
+    background-color: var(--text-light); /* Background becomes light */
+    color: var(--hover-text-color);     /* Text changes to accent color */
+    transform: translateY(-2px) scale(1.05); /* Slight lift and scale text */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.nav-links li a:hover::before,
+.nav-links li a:hover::after {
+    width: 100%; /* Expand border lines to full width on hover */
+}
+
+
+/* Click feedback animation */
+.nav-links li a:active {
+    transform: translateY(0px) scale(0.97); /* More pronounced press down */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    background-color: var(--accent-color); /* Flash accent color on click */
+    color: var(--text-light);
+}
+
+/* Pulsing Active Button */
+.nav-links li a.active {
+    background-color: var(--accent-color);
+    color: var(--text-light);
+    animation: pulseActiveButton 2s infinite ease-in-out;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.5); /* Initial shadow for active */
+}
+
+.nav-links li a.active:hover {
+    /* Override hover for active button to maintain its distinct look */
+    background-color: var(--accent-color); /* Keep accent color */
+    color: var(--text-light);
+    transform: translateY(-2px) scale(1.08); /* Slightly more scale for active hover */
+    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.6);
+}
+
+.nav-links li a.active:hover::before,
+.nav-links li a.active:hover::after {
+    width: 100%;
+    background-color: var(--text-light); /* Border animation color changes for active button */
+}
+
+
+/* --- MAIN CONTENT AREA --- */
+.main-content {
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.8s ease-out;
+}
+
+.main-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.main-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+.main-content ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+}
